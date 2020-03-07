@@ -1,0 +1,668 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SUMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Consorcio">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+          </Key>
+          <Property Name="cd_consorcio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tx_descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contacto">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+            <PropertyRef Name="cd_contacto" />
+          </Key>
+          <Property Name="cd_consorcio" Type="int" Nullable="false" />
+          <Property Name="cd_contacto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tx_rol" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="tx_nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="tx_telefono" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Espacio">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+            <PropertyRef Name="cd_espacio" />
+          </Key>
+          <Property Name="cd_consorcio" Type="int" Nullable="false" />
+          <Property Name="cd_espacio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tx_descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="fl_costo_semana" Type="float" Nullable="false" />
+          <Property Name="fl_costo_fin_de_semana" Type="float" Nullable="false" />
+          <Property Name="fl_limpieza" Type="float" Nullable="false" />
+          <Property Name="fl_multa" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Feriados">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+            <PropertyRef Name="cd_fecha" />
+          </Key>
+          <Property Name="cd_consorcio" Type="int" Nullable="false" />
+          <Property Name="cd_fecha" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fc_fecha" Type="datetime" Nullable="false" />
+          <Property Name="tx_descripcion" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Parametros">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+          </Key>
+          <Property Name="cd_consorcio" Type="int" Nullable="false" />
+          <Property Name="cd_dias_previos_cancelacion" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reclamo">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+            <PropertyRef Name="cd_reclamo" />
+          </Key>
+          <Property Name="cd_consorcio" Type="int" Nullable="false" />
+          <Property Name="cd_reclamo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cd_usuario" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="tx_reclamo" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="fl_publico" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reserva">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+            <PropertyRef Name="cd_espacio" />
+            <PropertyRef Name="cd_usuario" />
+            <PropertyRef Name="fc_fecha" />
+          </Key>
+          <Property Name="cd_consorcio" Type="int" Nullable="false" />
+          <Property Name="cd_espacio" Type="int" Nullable="false" />
+          <Property Name="cd_usuario" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="fc_fecha" Type="datetime" Nullable="false" />
+          <Property Name="fl_contrata_limpieza" Type="bit" Nullable="false" />
+          <Property Name="fl_multa" Type="bit" Nullable="false" />
+          <Property Name="tx_observacion" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+            <PropertyRef Name="cd_usuario" />
+          </Key>
+          <Property Name="cd_consorcio" Type="int" Nullable="false" />
+          <Property Name="cd_usuario" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="tx_contrasena" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="tx_mail" Type="varchar" MaxLength="50" />
+          <Property Name="tx_telefono" Type="varchar" MaxLength="50" />
+          <Property Name="fl_inhabilitado" Type="bit" Nullable="false" />
+          <Property Name="fl_administrador" Type="bit" Nullable="false" />
+          <Property Name="fl_inhabilita_reserva" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Contacto_Consorcio">
+          <End Role="Consorcio" Type="Self.Consorcio" Multiplicity="1" />
+          <End Role="Contacto" Type="Self.Contacto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consorcio">
+              <PropertyRef Name="cd_consorcio" />
+            </Principal>
+            <Dependent Role="Contacto">
+              <PropertyRef Name="cd_consorcio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Espacio_Consorcio">
+          <End Role="Consorcio" Type="Self.Consorcio" Multiplicity="1" />
+          <End Role="Espacio" Type="Self.Espacio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consorcio">
+              <PropertyRef Name="cd_consorcio" />
+            </Principal>
+            <Dependent Role="Espacio">
+              <PropertyRef Name="cd_consorcio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feriados_Consorcio">
+          <End Role="Consorcio" Type="Self.Consorcio" Multiplicity="1" />
+          <End Role="Feriados" Type="Self.Feriados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consorcio">
+              <PropertyRef Name="cd_consorcio" />
+            </Principal>
+            <Dependent Role="Feriados">
+              <PropertyRef Name="cd_consorcio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parametros_Consorcio">
+          <End Role="Consorcio" Type="Self.Consorcio" Multiplicity="1" />
+          <End Role="Parametros" Type="Self.Parametros" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Consorcio">
+              <PropertyRef Name="cd_consorcio" />
+            </Principal>
+            <Dependent Role="Parametros">
+              <PropertyRef Name="cd_consorcio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reclamo_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Reclamo" Type="Self.Reclamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="cd_consorcio" />
+              <PropertyRef Name="cd_usuario" />
+            </Principal>
+            <Dependent Role="Reclamo">
+              <PropertyRef Name="cd_consorcio" />
+              <PropertyRef Name="cd_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reserva_Espacio">
+          <End Role="Espacio" Type="Self.Espacio" Multiplicity="1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Espacio">
+              <PropertyRef Name="cd_consorcio" />
+              <PropertyRef Name="cd_espacio" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="cd_consorcio" />
+              <PropertyRef Name="cd_espacio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reserva_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="cd_consorcio" />
+              <PropertyRef Name="cd_usuario" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="cd_consorcio" />
+              <PropertyRef Name="cd_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Consorcio">
+          <End Role="Consorcio" Type="Self.Consorcio" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consorcio">
+              <PropertyRef Name="cd_consorcio" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="cd_consorcio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_GastosMensuales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mesano" Type="datetime" Mode="In" />
+          <Parameter Name="consorcio" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_GastosMensualesDetalle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mesano" Type="datetime" Mode="In" />
+          <Parameter Name="consorcio" Type="int" Mode="In" />
+          <Parameter Name="usuario" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="SUMModelStoreContainer">
+          <EntitySet Name="Consorcio" EntityType="Self.Consorcio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacto" EntityType="Self.Contacto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Espacio" EntityType="Self.Espacio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feriados" EntityType="Self.Feriados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parametros" EntityType="Self.Parametros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reclamo" EntityType="Self.Reclamo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reserva" EntityType="Self.Reserva" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Contacto_Consorcio" Association="Self.FK_Contacto_Consorcio">
+            <End Role="Consorcio" EntitySet="Consorcio" />
+            <End Role="Contacto" EntitySet="Contacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Espacio_Consorcio" Association="Self.FK_Espacio_Consorcio">
+            <End Role="Consorcio" EntitySet="Consorcio" />
+            <End Role="Espacio" EntitySet="Espacio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feriados_Consorcio" Association="Self.FK_Feriados_Consorcio">
+            <End Role="Consorcio" EntitySet="Consorcio" />
+            <End Role="Feriados" EntitySet="Feriados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parametros_Consorcio" Association="Self.FK_Parametros_Consorcio">
+            <End Role="Consorcio" EntitySet="Consorcio" />
+            <End Role="Parametros" EntitySet="Parametros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reclamo_Usuario" Association="Self.FK_Reclamo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Reclamo" EntitySet="Reclamo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Espacio" Association="Self.FK_Reserva_Espacio">
+            <End Role="Espacio" EntitySet="Espacio" />
+            <End Role="Reserva" EntitySet="Reserva" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Usuario" Association="Self.FK_Reserva_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Reserva" EntitySet="Reserva" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Consorcio" Association="Self.FK_Usuario_Consorcio">
+            <End Role="Consorcio" EntitySet="Consorcio" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SUMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Consorcio">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+          </Key>
+          <Property Name="cd_consorcio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tx_descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Contacto" Relationship="Self.FK_Contacto_Consorcio" FromRole="Consorcio" ToRole="Contacto" />
+          <NavigationProperty Name="Espacio" Relationship="Self.FK_Espacio_Consorcio" FromRole="Consorcio" ToRole="Espacio" />
+          <NavigationProperty Name="Feriados" Relationship="Self.FK_Feriados_Consorcio" FromRole="Consorcio" ToRole="Feriados" />
+          <NavigationProperty Name="Parametros" Relationship="Self.FK_Parametros_Consorcio" FromRole="Consorcio" ToRole="Parametros" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Consorcio" FromRole="Consorcio" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Contacto">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+            <PropertyRef Name="cd_contacto" />
+          </Key>
+          <Property Name="cd_consorcio" Type="Int32" Nullable="false" />
+          <Property Name="cd_contacto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tx_rol" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tx_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tx_telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Consorcio" Relationship="Self.FK_Contacto_Consorcio" FromRole="Contacto" ToRole="Consorcio" />
+        </EntityType>
+        <EntityType Name="Espacio">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+            <PropertyRef Name="cd_espacio" />
+          </Key>
+          <Property Name="cd_consorcio" Type="Int32" Nullable="false" />
+          <Property Name="cd_espacio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tx_descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fl_costo_semana" Type="Double" Nullable="false" />
+          <Property Name="fl_costo_fin_de_semana" Type="Double" Nullable="false" />
+          <Property Name="fl_limpieza" Type="Double" Nullable="false" />
+          <Property Name="fl_multa" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Consorcio" Relationship="Self.FK_Espacio_Consorcio" FromRole="Espacio" ToRole="Consorcio" />
+          <NavigationProperty Name="Reserva" Relationship="Self.FK_Reserva_Espacio" FromRole="Espacio" ToRole="Reserva" />
+        </EntityType>
+        <EntityType Name="Feriados">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+            <PropertyRef Name="cd_fecha" />
+          </Key>
+          <Property Name="cd_consorcio" Type="Int32" Nullable="false" />
+          <Property Name="cd_fecha" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fc_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="tx_descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Consorcio" Relationship="Self.FK_Feriados_Consorcio" FromRole="Feriados" ToRole="Consorcio" />
+        </EntityType>
+        <EntityType Name="Parametros">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+          </Key>
+          <Property Name="cd_consorcio" Type="Int32" Nullable="false" />
+          <Property Name="cd_dias_previos_cancelacion" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Consorcio" Relationship="Self.FK_Parametros_Consorcio" FromRole="Parametros" ToRole="Consorcio" />
+        </EntityType>
+        <EntityType Name="Reclamo">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+            <PropertyRef Name="cd_reclamo" />
+          </Key>
+          <Property Name="cd_consorcio" Type="Int32" Nullable="false" />
+          <Property Name="cd_reclamo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cd_usuario" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tx_reclamo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fl_publico" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Reclamo_Usuario" FromRole="Reclamo" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Reserva">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+            <PropertyRef Name="cd_espacio" />
+            <PropertyRef Name="cd_usuario" />
+            <PropertyRef Name="fc_fecha" />
+          </Key>
+          <Property Name="cd_consorcio" Type="Int32" Nullable="false" />
+          <Property Name="cd_espacio" Type="Int32" Nullable="false" />
+          <Property Name="cd_usuario" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fc_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fl_contrata_limpieza" Type="Boolean" Nullable="false" />
+          <Property Name="fl_multa" Type="Boolean" Nullable="false" />
+          <Property Name="tx_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Espacio" Relationship="Self.FK_Reserva_Espacio" FromRole="Reserva" ToRole="Espacio" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Reserva_Usuario" FromRole="Reserva" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="cd_consorcio" />
+            <PropertyRef Name="cd_usuario" />
+          </Key>
+          <Property Name="cd_consorcio" Type="Int32" Nullable="false" />
+          <Property Name="cd_usuario" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tx_contrasena" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tx_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tx_telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fl_inhabilitado" Type="Boolean" Nullable="false" />
+          <Property Name="fl_administrador" Type="Boolean" Nullable="false" />
+          <Property Name="fl_inhabilita_reserva" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Consorcio" Relationship="Self.FK_Usuario_Consorcio" FromRole="Usuario" ToRole="Consorcio" />
+          <NavigationProperty Name="Reclamo" Relationship="Self.FK_Reclamo_Usuario" FromRole="Usuario" ToRole="Reclamo" />
+          <NavigationProperty Name="Reserva" Relationship="Self.FK_Reserva_Usuario" FromRole="Usuario" ToRole="Reserva" />
+        </EntityType>
+        <Association Name="FK_Contacto_Consorcio">
+          <End Role="Consorcio" Type="Self.Consorcio" Multiplicity="1" />
+          <End Role="Contacto" Type="Self.Contacto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consorcio">
+              <PropertyRef Name="cd_consorcio" />
+            </Principal>
+            <Dependent Role="Contacto">
+              <PropertyRef Name="cd_consorcio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Espacio_Consorcio">
+          <End Role="Consorcio" Type="Self.Consorcio" Multiplicity="1" />
+          <End Role="Espacio" Type="Self.Espacio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consorcio">
+              <PropertyRef Name="cd_consorcio" />
+            </Principal>
+            <Dependent Role="Espacio">
+              <PropertyRef Name="cd_consorcio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feriados_Consorcio">
+          <End Role="Consorcio" Type="Self.Consorcio" Multiplicity="1" />
+          <End Role="Feriados" Type="Self.Feriados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consorcio">
+              <PropertyRef Name="cd_consorcio" />
+            </Principal>
+            <Dependent Role="Feriados">
+              <PropertyRef Name="cd_consorcio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parametros_Consorcio">
+          <End Role="Consorcio" Type="Self.Consorcio" Multiplicity="1" />
+          <End Role="Parametros" Type="Self.Parametros" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Consorcio">
+              <PropertyRef Name="cd_consorcio" />
+            </Principal>
+            <Dependent Role="Parametros">
+              <PropertyRef Name="cd_consorcio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Consorcio">
+          <End Role="Consorcio" Type="Self.Consorcio" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consorcio">
+              <PropertyRef Name="cd_consorcio" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="cd_consorcio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reserva_Espacio">
+          <End Role="Espacio" Type="Self.Espacio" Multiplicity="1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Espacio">
+              <PropertyRef Name="cd_consorcio" />
+              <PropertyRef Name="cd_espacio" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="cd_consorcio" />
+              <PropertyRef Name="cd_espacio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reclamo_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Reclamo" Type="Self.Reclamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="cd_consorcio" />
+              <PropertyRef Name="cd_usuario" />
+            </Principal>
+            <Dependent Role="Reclamo">
+              <PropertyRef Name="cd_consorcio" />
+              <PropertyRef Name="cd_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reserva_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="cd_consorcio" />
+              <PropertyRef Name="cd_usuario" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="cd_consorcio" />
+              <PropertyRef Name="cd_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Sum1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Consorcio" EntityType="Self.Consorcio" />
+          <EntitySet Name="Contacto" EntityType="Self.Contacto" />
+          <EntitySet Name="Espacio" EntityType="Self.Espacio" />
+          <EntitySet Name="Feriados" EntityType="Self.Feriados" />
+          <EntitySet Name="Parametros" EntityType="Self.Parametros" />
+          <EntitySet Name="Reclamo" EntityType="Self.Reclamo" />
+          <EntitySet Name="Reserva" EntityType="Self.Reserva" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Contacto_Consorcio" Association="Self.FK_Contacto_Consorcio">
+            <End Role="Consorcio" EntitySet="Consorcio" />
+            <End Role="Contacto" EntitySet="Contacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Espacio_Consorcio" Association="Self.FK_Espacio_Consorcio">
+            <End Role="Consorcio" EntitySet="Consorcio" />
+            <End Role="Espacio" EntitySet="Espacio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feriados_Consorcio" Association="Self.FK_Feriados_Consorcio">
+            <End Role="Consorcio" EntitySet="Consorcio" />
+            <End Role="Feriados" EntitySet="Feriados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parametros_Consorcio" Association="Self.FK_Parametros_Consorcio">
+            <End Role="Consorcio" EntitySet="Consorcio" />
+            <End Role="Parametros" EntitySet="Parametros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Consorcio" Association="Self.FK_Usuario_Consorcio">
+            <End Role="Consorcio" EntitySet="Consorcio" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Espacio" Association="Self.FK_Reserva_Espacio">
+            <End Role="Espacio" EntitySet="Espacio" />
+            <End Role="Reserva" EntitySet="Reserva" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reclamo_Usuario" Association="Self.FK_Reclamo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Reclamo" EntitySet="Reclamo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Usuario" Association="Self.FK_Reserva_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Reserva" EntitySet="Reserva" />
+          </AssociationSet>
+          <FunctionImport Name="sp_GastosMensuales" ReturnType="Collection(SUMModel.sp_GastosMensuales_Result)">
+            <Parameter Name="mesano" Mode="In" Type="DateTime" />
+            <Parameter Name="consorcio" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GastosMensualesDetalle" ReturnType="Collection(SUMModel.sp_GastosMensualesDetalle_Result)">
+            <Parameter Name="mesano" Mode="In" Type="DateTime" />
+            <Parameter Name="consorcio" Mode="In" Type="Int32" />
+            <Parameter Name="usuario" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_GastosMensuales_Result">
+          <Property Type="String" Name="cd_usuario" Nullable="false" MaxLength="10" />
+          <Property Type="Double" Name="costo" Nullable="true" />
+          <Property Type="Double" Name="limpieza" Nullable="true" />
+          <Property Type="Double" Name="total" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GastosMensualesDetalle_Result">
+          <Property Type="String" Name="cd_usuario" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="fc_fecha" Nullable="false" Precision="23" />
+          <Property Type="String" Name="tx_descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="Boolean" Name="fl_multa" Nullable="false" />
+          <Property Type="Boolean" Name="fl_contrata_limpieza" Nullable="false" />
+          <Property Type="Double" Name="costo" Nullable="true" />
+          <Property Type="Double" Name="limpieza" Nullable="true" />
+          <Property Type="Double" Name="total" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SUMModelStoreContainer" CdmEntityContainer="Sum1Entities">
+          <EntitySetMapping Name="Consorcio">
+            <EntityTypeMapping TypeName="SUMModel.Consorcio">
+              <MappingFragment StoreEntitySet="Consorcio">
+                <ScalarProperty Name="cd_consorcio" ColumnName="cd_consorcio" />
+                <ScalarProperty Name="tx_descripcion" ColumnName="tx_descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacto">
+            <EntityTypeMapping TypeName="SUMModel.Contacto">
+              <MappingFragment StoreEntitySet="Contacto">
+                <ScalarProperty Name="cd_consorcio" ColumnName="cd_consorcio" />
+                <ScalarProperty Name="cd_contacto" ColumnName="cd_contacto" />
+                <ScalarProperty Name="tx_rol" ColumnName="tx_rol" />
+                <ScalarProperty Name="tx_nombre" ColumnName="tx_nombre" />
+                <ScalarProperty Name="tx_telefono" ColumnName="tx_telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Espacio">
+            <EntityTypeMapping TypeName="SUMModel.Espacio">
+              <MappingFragment StoreEntitySet="Espacio">
+                <ScalarProperty Name="cd_consorcio" ColumnName="cd_consorcio" />
+                <ScalarProperty Name="cd_espacio" ColumnName="cd_espacio" />
+                <ScalarProperty Name="tx_descripcion" ColumnName="tx_descripcion" />
+                <ScalarProperty Name="fl_costo_semana" ColumnName="fl_costo_semana" />
+                <ScalarProperty Name="fl_costo_fin_de_semana" ColumnName="fl_costo_fin_de_semana" />
+                <ScalarProperty Name="fl_limpieza" ColumnName="fl_limpieza" />
+                <ScalarProperty Name="fl_multa" ColumnName="fl_multa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feriados">
+            <EntityTypeMapping TypeName="SUMModel.Feriados">
+              <MappingFragment StoreEntitySet="Feriados">
+                <ScalarProperty Name="cd_consorcio" ColumnName="cd_consorcio" />
+                <ScalarProperty Name="cd_fecha" ColumnName="cd_fecha" />
+                <ScalarProperty Name="fc_fecha" ColumnName="fc_fecha" />
+                <ScalarProperty Name="tx_descripcion" ColumnName="tx_descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parametros">
+            <EntityTypeMapping TypeName="SUMModel.Parametros">
+              <MappingFragment StoreEntitySet="Parametros">
+                <ScalarProperty Name="cd_consorcio" ColumnName="cd_consorcio" />
+                <ScalarProperty Name="cd_dias_previos_cancelacion" ColumnName="cd_dias_previos_cancelacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reclamo">
+            <EntityTypeMapping TypeName="SUMModel.Reclamo">
+              <MappingFragment StoreEntitySet="Reclamo">
+                <ScalarProperty Name="cd_consorcio" ColumnName="cd_consorcio" />
+                <ScalarProperty Name="cd_reclamo" ColumnName="cd_reclamo" />
+                <ScalarProperty Name="cd_usuario" ColumnName="cd_usuario" />
+                <ScalarProperty Name="tx_reclamo" ColumnName="tx_reclamo" />
+                <ScalarProperty Name="fl_publico" ColumnName="fl_publico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reserva">
+            <EntityTypeMapping TypeName="SUMModel.Reserva">
+              <MappingFragment StoreEntitySet="Reserva">
+                <ScalarProperty Name="cd_consorcio" ColumnName="cd_consorcio" />
+                <ScalarProperty Name="cd_espacio" ColumnName="cd_espacio" />
+                <ScalarProperty Name="cd_usuario" ColumnName="cd_usuario" />
+                <ScalarProperty Name="fc_fecha" ColumnName="fc_fecha" />
+                <ScalarProperty Name="fl_contrata_limpieza" ColumnName="fl_contrata_limpieza" />
+                <ScalarProperty Name="fl_multa" ColumnName="fl_multa" />
+                <ScalarProperty Name="tx_observacion" ColumnName="tx_observacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="SUMModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="cd_consorcio" ColumnName="cd_consorcio" />
+                <ScalarProperty Name="cd_usuario" ColumnName="cd_usuario" />
+                <ScalarProperty Name="tx_contrasena" ColumnName="tx_contrasena" />
+                <ScalarProperty Name="tx_mail" ColumnName="tx_mail" />
+                <ScalarProperty Name="tx_telefono" ColumnName="tx_telefono" />
+                <ScalarProperty Name="fl_inhabilitado" ColumnName="fl_inhabilitado" />
+                <ScalarProperty Name="fl_administrador" ColumnName="fl_administrador" />
+                <ScalarProperty Name="fl_inhabilita_reserva" ColumnName="fl_inhabilita_reserva" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GastosMensuales" FunctionName="SUMModel.Store.sp_GastosMensuales">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SUMModel.sp_GastosMensuales_Result">
+                <ScalarProperty Name="cd_usuario" ColumnName="cd_usuario" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="limpieza" ColumnName="limpieza" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GastosMensualesDetalle" FunctionName="SUMModel.Store.sp_GastosMensualesDetalle">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SUMModel.sp_GastosMensualesDetalle_Result">
+                <ScalarProperty Name="cd_usuario" ColumnName="cd_usuario" />
+                <ScalarProperty Name="fc_fecha" ColumnName="fc_fecha" />
+                <ScalarProperty Name="tx_descripcion" ColumnName="tx_descripcion" />
+                <ScalarProperty Name="fl_multa" ColumnName="fl_multa" />
+                <ScalarProperty Name="fl_contrata_limpieza" ColumnName="fl_contrata_limpieza" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="limpieza" ColumnName="limpieza" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

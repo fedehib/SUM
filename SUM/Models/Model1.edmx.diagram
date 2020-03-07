@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fe6c13792ba94ca8aa98f6b3fe2fd855" Name="Diagram1">
+        <EntityTypeShape EntityType="SUMModel.Consorcio" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SUMModel.Contacto" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SUMModel.Espacio" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SUMModel.Feriados" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="SUMModel.Parametros" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SUMModel.Reclamo" Width="1.5" PointX="5.25" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SUMModel.Reserva" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="SUMModel.Usuario" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <AssociationConnector Association="SUMModel.FK_Contacto_Consorcio" ManuallyRouted="false" />
+        <AssociationConnector Association="SUMModel.FK_Espacio_Consorcio" ManuallyRouted="false" />
+        <AssociationConnector Association="SUMModel.FK_Feriados_Consorcio" ManuallyRouted="false" />
+        <AssociationConnector Association="SUMModel.FK_Parametros_Consorcio" ManuallyRouted="false" />
+        <AssociationConnector Association="SUMModel.FK_Usuario_Consorcio" ManuallyRouted="false" />
+        <AssociationConnector Association="SUMModel.FK_Reserva_Espacio" ManuallyRouted="false" />
+        <AssociationConnector Association="SUMModel.FK_Reclamo_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="SUMModel.FK_Reserva_Usuario" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

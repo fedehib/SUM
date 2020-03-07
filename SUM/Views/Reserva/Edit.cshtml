@@ -1,0 +1,70 @@
+﻿@model SUM.Models.Reserva
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Reserva</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.cd_consorcio)
+
+        @Html.HiddenFor(model => model.cd_espacio)
+
+        @Html.HiddenFor(model => model.cd_usuario)
+
+        @Html.HiddenFor(model => model.fc_fecha)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fl_contrata_limpieza,"Contrata limpieza?", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.fl_contrata_limpieza)
+                    @Html.ValidationMessageFor(model => model.fl_contrata_limpieza, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        @if (((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.fl_multa,"Aplicar multa?", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.fl_multa)
+                        @Html.ValidationMessageFor(model => model.fl_multa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="form-group">
+            @Html.LabelFor(model => model.tx_observacion,"Observaciones", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <textarea class="form-control" name="tx_observacion" rows="10" id="tx_observacion">@Model.tx_observacion</textarea>
+                @Html.ValidationMessageFor(model => model.tx_observacion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Guardar" class="btn btn-default" />
+        </div>
+    </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Volver a la lista", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

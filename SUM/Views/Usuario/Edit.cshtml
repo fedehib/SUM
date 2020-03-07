@@ -1,0 +1,93 @@
+﻿@model SUM.Models.Usuario
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Usuario</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.cd_consorcio)
+
+    @Html.HiddenFor(model => model.cd_usuario)
+   
+    <div class="form-group">
+        @Html.LabelFor(model => model.tx_contrasena,"Contraseña", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tx_contrasena, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tx_contrasena, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tx_mail,"E-Mail", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tx_mail, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tx_mail, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tx_telefono,"Telefono", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tx_telefono, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tx_telefono, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @if (((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.fl_administrador, "Es administrador?", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.fl_administrador)
+                    @Html.ValidationMessageFor(model => model.fl_administrador, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fl_inhabilitado,"Deshabilitar departamento", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.fl_inhabilitado)
+                    @Html.ValidationMessageFor(model => model.fl_inhabilitado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fl_inhabilita_reserva,"Deshabiliar reserva", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.fl_inhabilita_reserva)
+                    @Html.ValidationMessageFor(model => model.fl_inhabilita_reserva, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Guardar" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Volver a la lista", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

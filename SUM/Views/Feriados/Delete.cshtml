@@ -1,0 +1,54 @@
+﻿@model SUM.Models.Feriados
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Eliminar</h2>
+
+<h3>¿Esta seguro que desea eliminarlo?</h3>
+<div>
+    <h4>Feriados</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            ID
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cd_fecha)
+        </dd>
+        <dt>
+            Fecha
+        </dt>
+
+        <dd>
+            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.fc_fecha))
+        </dd>
+        <dt>
+            Descripción
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_descripcion)
+        </dd>
+
+        <dt>
+           Consorcio
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Consorcio.tx_descripcion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Eliminar" class="btn btn-default" /> |
+        @Html.ActionLink("Volver a la lista", "Index")
+    </div>
+    }
+</div>

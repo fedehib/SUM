@@ -1,0 +1,84 @@
+﻿@model SUM.Models.Usuario
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Eliminar</h2>
+
+<h3>¿Esta seguro que desea eliminarlo?</h3>
+<div>
+    <h4>Usuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Departamento
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cd_usuario)
+        </dd>
+        <dt>
+            Contraseña
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_contrasena)
+        </dd>
+
+        <dt>
+            E-Mail
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_mail)
+        </dd>
+
+        <dt>
+            Telefono
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_telefono)
+        </dd>
+        <dt>
+            Es administrador?
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_administrador)
+        </dd>
+        <dt>
+            Deshabilitar departamento
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_inhabilitado)
+        </dd>
+        
+        <dt>
+           Deshabilitar reserva
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_inhabilita_reserva)
+        </dd>
+        <dt>
+           Consorcio
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Consorcio.tx_descripcion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Volver a la lista", "Index")
+        </div>
+    }
+</div>

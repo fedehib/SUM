@@ -1,0 +1,39 @@
+﻿@model IEnumerable<SUM.Models.Parametros>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Cantidad de dias previo cancelacion
+        </th>
+        <th>
+           Consorcio
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.cd_dias_previos_cancelacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Consorcio.tx_descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.cd_consorcio }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.cd_consorcio }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.cd_consorcio })
+        </td>
+    </tr>
+}
+
+</table>

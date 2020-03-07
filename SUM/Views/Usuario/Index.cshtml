@@ -1,0 +1,81 @@
+﻿@model IEnumerable<SUM.Models.Usuario>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @if (ViewBag.Administrador) 
+    { 
+        @Html.ActionLink("Crear nuevo", "Create")
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Departamento
+        </th>
+        <th>
+            Contraseña
+        </th>
+        <th>
+            E-Mail
+        </th>
+        <th>
+            Telefono
+        </th>
+        <th>
+            Es administrador?
+        </th>
+        <th>
+            Deshabilitar departamento
+        </th>
+        <th>
+            Deshabilitar reserva
+        </th>
+        <th>
+           Consorcio
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.cd_usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tx_contrasena)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tx_mail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tx_telefono)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fl_administrador)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fl_inhabilitado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fl_inhabilita_reserva)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Consorcio.tx_descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.cd_usuario }) |
+            @Html.ActionLink("Detalles", "Details", new { id = item.cd_usuario }) |
+            @if (((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
+        {
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.cd_usuario })
+    }
+        </td>
+    </tr>
+}
+
+</table>

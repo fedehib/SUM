@@ -1,0 +1,84 @@
+﻿@model IEnumerable<SUM.Models.sp_GastosMensualesDetalle_Result>
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Departamento
+        </th>
+        <th>
+            Fecha
+        </th>
+        <th>
+            Descripción
+        </th>
+        <th>
+            ¿Tiene multa?
+        </th>
+        <th>
+            ¿Contrató limpieza?
+        </th>
+        <th>
+            Costo
+        </th>
+        <th>
+            Limpieza
+        </th>
+        <th>
+            Total
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.cd_usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fc_fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tx_descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fl_multa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fl_contrata_limpieza)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.costo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.limpieza)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total)
+            </td>
+        </tr>
+    }
+</table>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+            <span class="pull-right">
+                @if (Model.Count() > 0)
+                {
+                <a href="@Url.Action("DescargarGastosMensualesDetalle", "Home", new { mesano = ViewBag.fecha, id = ViewBag.id})"> <img src="~/Images/xls16.gif" alt="Descargar archivo Excel" /> </a>
+                }
+            </span>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Volver a la lista", "GastosMensuales")
+</p>

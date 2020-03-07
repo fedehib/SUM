@@ -1,0 +1,39 @@
+﻿@model SUM.Models.Reclamo
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<div>
+    <h4>Detalle de Reclamo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+ 
+        <dt>
+            Reclamo
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_reclamo)
+        </dd>
+
+        <dt>
+          Departamento
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.cd_usuario)
+        </dd>
+        <dt>
+            Es publico?
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_publico)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Volver a la lista", "Index")
+</p>

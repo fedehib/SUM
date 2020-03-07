@@ -1,0 +1,54 @@
+﻿@model IEnumerable<SUM.Models.Reclamo>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Reclamos</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Reclamo
+        </th>
+        <th>
+            Departamento
+        </th>
+        <th>
+            Es publico?
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.cd_reclamo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tx_reclamo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario.cd_usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fl_publico)
+        </td>
+        <td>
+            @if (item.cd_usuario == ((SUM.Models.Usuario)Session["Usuario"]).cd_usuario || ((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
+    {
+        @Html.ActionLink("Editar", "Edit", new { id = item.cd_reclamo }) 
+@Html.ActionLink("| Detalles", "Details", new { id = item.cd_reclamo }) 
+            @Html.ActionLink("| Eliminar", "Delete", new { id = item.cd_reclamo })
+            }
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Sistema de Reservas</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Content/calendar/jquery.min.js"></script>
+    <link href="~/Content/calendar/fullcalendar.min.css" rel="stylesheet">
+    <link href="~/Content/calendar/fullcalendar.print.min.css" rel="stylesheet" media="print">
+    <script src="~/Content/calendar/moment.min.js"></script>
+    <script src="~/Content/calendar/fullcalendar.min.js"></script>
+    <script src='~/Content/calendar/locale-all.js'></script>
+    <script src='~/Content/calendar/theme-chooser.js'></script>
+    <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
+    <link rel="stylesheet" href="~/Content/bootstrap-datetimepicker.css" />
+    <script type="text/javascript" src="~/Scripts/bootstrap-datetimepicker.es.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128594132-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-128594132-1');
+    </script>
+
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Sistema de Reservas", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (Session["Usuario"] != null)
+                    {
+                        if (!((SUM.Models.Usuario)Session["Usuario"]).fl_inhabilita_reserva || ((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
+                        {
+                            <li>@Html.ActionLink("Reservar", "Create", "Reserva")</li>
+                        }
+                <li>@Html.ActionLink("Reclamo", "Create", "Reclamo")</li>
+if (((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
+{
+                <li>@Html.ActionLink("Usuario", "Index", "Usuario")</li>
+                <li>@Html.ActionLink("Parametros", "Index", "Parametros")</li>
+                <li>@Html.ActionLink("Espacio", "Index", "Espacio")</li>
+                <li>@Html.ActionLink("Contacto", "Index", "Contacto")</li>
+                <li>@Html.ActionLink("Feriados", "Index", "Feriados")</li>
+                <li>@Html.ActionLink("Gastos Mensuales", "GastosMensuales", "Home")</li>
+
+}
+}
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Sistema de Reservas</p>
+        </footer>
+    </div>
+
+    
+    @RenderSection("scripts", required: false)
+</body>
+</html>

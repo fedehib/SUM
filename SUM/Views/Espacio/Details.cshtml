@@ -1,0 +1,65 @@
+﻿@model SUM.Models.Espacio
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Espacio</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Descripción
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_descripcion)
+        </dd>
+
+        <dt>
+            Costo semana
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_costo_semana)
+        </dd>
+
+        <dt>
+            Costo fin de semana
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_costo_fin_de_semana)
+        </dd>
+        <dt>
+            Costo limpieza
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_limpieza)
+        </dd>
+
+        <dt>
+            Costo multa
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_multa)
+        </dd>
+
+        <dt>
+            Consorcio
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Consorcio.tx_descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new {  id = Model.cd_espacio  }) |
+    @Html.ActionLink("Volver a la lista", "Index")
+</p>

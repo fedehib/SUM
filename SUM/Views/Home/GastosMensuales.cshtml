@@ -1,0 +1,130 @@
+﻿@model IEnumerable<SUM.Models.sp_GastosMensuales_Result>
+
+@{
+    ViewBag.Title = "Gastos Mensuales";
+}
+
+
+
+
+<h2>Consulta de Gastos Mensuales</h2>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.Label("Seleccione mes", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group date has-feedback datetimepicker1">
+                    <input type="datetime" name="mesano" id="mesano" class="form-control date-picker" />
+                    <i class="fa fa-calendar form-control-feedback"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="submit" value="Filtrar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <span class="pull-right">
+                    @if (Model.Count() > 0)
+        {
+            <a href="@Url.Action("DescargarGastosMensuales", "Home", new { mesano = ViewBag.fecha })"> <img src="~/Images/xls16.gif" alt="Descargar archivo Excel" /> </a>
+}
+                    </span>
+            </div>
+            </div>
+        </div>
+
+        <table class="table" id="example">
+            <tr>
+                <th>
+                    Departamento
+                </th>
+
+                <th>
+                    Costo
+                </th>
+                <th>
+                    Limpieza
+                </th>
+                <th>
+                    Total
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cd_usuario)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.costo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.limpieza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.total)
+                </td>
+                <td>
+                    @Html.ActionLink("Detalles", "Details", new { mesano = ViewBag.fecha, id = item.cd_usuario }) |
+                    <a href="@Url.Action("DescargarGastosMensualesDetalle", "Home", new { mesano = ViewBag.fecha, id = item.cd_usuario})"> <img src="~/Images/xls16.gif" alt="Descargar archivo Excel" /> </a>
+                </td>
+            </tr>
+    }
+
+        </table>
+
+        }
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+
+        <script type="text/javascript">
+
+            $(function () {
+                $('.datetimepicker1').datetimepicker({
+                    keepOpen: false,
+                    allowInputToggle: true,
+                    viewMode: 'months',
+                    format: 'MM/YYYY'
+                }).on('changeDate', function (e) {
+                    $(this).datepicker('hide');
+                });
+            });
+
+            $(document).ready(function () {
+                $('#submit').prop("disabled", true);
+                $('#mesano').on("keyup", action);
+                $('#mesano').on("click", action);
+                $('#mesano').on("keydown", action);
+                $('#mesano').on("change", action);
+
+                function action() {
+                    if ($('#mesano').val().length > 0 && $('#mesano').val() != '') {
+                        $('#submit').prop("disabled", false);
+                    } else {
+                        $('#submit').prop("disabled", true);
+                    }
+                }
+            });
+
+
+        </script>

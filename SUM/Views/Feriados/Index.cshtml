@@ -1,0 +1,51 @@
+﻿@model IEnumerable<SUM.Models.Feriados>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Fecha
+        </th>
+        <th>
+            Descripción
+        </th>
+        <th>
+           Consorcio
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.cd_fecha)
+        </td>
+        <td>
+            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.fc_fecha))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tx_descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Consorcio.tx_descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.cd_fecha }) |
+            @Html.ActionLink("Detalles", "Details", new { id = item.cd_fecha }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.cd_fecha })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,50 @@
+﻿@model SUM.Models.Contacto
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Contacto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Rol
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_rol)
+        </dd>
+
+        <dt>
+            Nombre
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_nombre)
+        </dd>
+
+        <dt>
+            Teléfono
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_telefono)
+        </dd>
+
+        <dt>
+            Consorcio
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Consorcio.tx_descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.cd_contacto }) |
+    @Html.ActionLink("Volver a la lista", "Index")
+</p>

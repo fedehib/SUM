@@ -1,0 +1,48 @@
+﻿@model SUM.Models.Feriados
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Feriados</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            ID
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cd_fecha)
+        </dd>
+        <dt>
+            Fecha
+        </dt>
+
+        <dd>
+            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.fc_fecha))
+        </dd>
+        <dt>
+            Descripción
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_descripcion)
+        </dd>
+
+        <dt>
+           Consorcio
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Consorcio.tx_descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new {  id = Model.cd_fecha  }) |
+    @Html.ActionLink("Volver a la lista", "Index")
+</p>

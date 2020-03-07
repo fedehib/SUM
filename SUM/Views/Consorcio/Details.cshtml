@@ -1,0 +1,27 @@
+﻿@model SUM.Models.Consorcio
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Consorcio</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Descripción
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_descripcion)
+        </dd>
+
+      
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.cd_consorcio }) |
+    @Html.ActionLink("Volver a la lista", "Index")
+</p>

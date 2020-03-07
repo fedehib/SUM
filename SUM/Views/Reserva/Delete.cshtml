@@ -1,0 +1,82 @@
+﻿@model SUM.Models.Reserva
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Eliminar</h2>
+
+<h3>¿Esta seguro que desea eliminarlo?</h3>
+<div>
+    <h4>Reserva</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            Departamento
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.cd_usuario)
+        </dd>
+        <dt>
+            Espacio
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Espacio.tx_descripcion)
+        </dd>
+
+        <dt>
+           Fecha de reserva
+        </dt>
+
+        <dd>
+            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.fc_fecha))
+        </dd>
+        <dt>
+            Contrata limpieza?
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_contrata_limpieza)
+        </dd>
+
+        <dt>
+            Aplica multa?
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_multa)
+        </dd>
+
+        <dt>
+            Observaciones
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_observacion)
+        </dd>
+
+
+
+
+    </dl>
+
+    <div class="form-group alert alert-danger">
+        
+            <h6>Esta reserva se puede eliminar sin costo antes de @ViewBag.Fecha, pasado ese dia, se abonara la reserva de todas maneras.</h6>
+        
+    </div>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+@if ((((SUM.Models.Usuario)Session["Usuario"]).fl_administrador) || ViewBag.PuedeEliminarse) {
+            <input type="submit" value="Eliminar" class="btn btn-default" />
+                                                                           }
+            | @Html.ActionLink("Volver a la lista", "Index")
+        </div>
+    }
+</div>

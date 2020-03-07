@@ -1,0 +1,68 @@
+﻿@model IEnumerable<SUM.Models.Reserva>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Departamento
+        </th>
+        <th>
+            Espacio
+        </th>
+        <th>
+            Fecha de reserva
+        </th>
+        <th>
+            Contrata limpieza?
+        </th>
+        <th>
+            Aplica multa?
+        </th>
+        <th>
+            Observaciones
+        </th>
+              
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario.cd_usuario)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Espacio.tx_descripcion)
+        </td>
+        <td>
+            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.fc_fecha))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fl_contrata_limpieza)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fl_multa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tx_observacion)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { espacio = item.cd_espacio, usuario = item.cd_usuario, fecha = item.fc_fecha }) |
+            @Html.ActionLink("Detalles", "Details", new { espacio = item.cd_espacio, usuario = item.cd_usuario, fecha = item.fc_fecha }) |
+            @if (item.fc_fecha >= DateTime.Now.Date || ((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
+        {
+            @Html.ActionLink("Eliminar", "Delete", new { espacio = item.cd_espacio, usuario = item.cd_usuario, fecha = item.fc_fecha })
+    }
+        </td>
+    </tr>
+}
+
+</table>

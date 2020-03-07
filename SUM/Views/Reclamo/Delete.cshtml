@@ -1,0 +1,46 @@
+﻿@model SUM.Models.Reclamo
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h3>Desea eliminar su reclamo ?</h3>
+<div>
+    <h4>Reclamo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+ 
+        <dt>
+           Reclamo
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_reclamo)
+        </dd>
+
+        <dt>
+           Departamento
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.cd_usuario)
+        </dd>
+        <dt>
+            Es publico?
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_publico)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Eliminar" class="btn btn-default" /> |
+        @Html.ActionLink("Volver a la lista", "Index")
+    </div>
+    }
+</div>

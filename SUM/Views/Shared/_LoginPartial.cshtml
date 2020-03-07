@@ -1,0 +1,21 @@
+﻿
+@if (Session["Usuario"] != null)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Bienvenido " + ((SUM.Models.Usuario)Session["Usuario"]).cd_usuario + " ("+ ((SUM.Models.Usuario)Session["Usuario"]).Consorcio.tx_descripcion + ")!", "Edit", "Usuario")
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Iniciar sesión", "Login", "Account")</li>
+    </ul>
+}

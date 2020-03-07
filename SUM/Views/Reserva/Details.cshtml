@@ -1,0 +1,67 @@
+﻿@model SUM.Models.Reserva
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Reserva</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            Departamento
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.cd_usuario)
+        </dd>
+        <dt>
+            Espacio
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Espacio.tx_descripcion)
+        </dd>
+
+        <dt>
+            Fecha de reserva
+        </dt>
+
+        <dd>
+            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.fc_fecha))
+        </dd>
+        <dt>
+            Contrata limpieza?
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_contrata_limpieza)
+        </dd>
+
+        <dt>
+            Aplica multa?
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fl_multa)
+        </dd>
+
+        <dt>
+            Observaciones
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tx_observacion)
+        </dd>
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { espacio = Model.cd_espacio, usuario = Model.cd_usuario, fecha = Model.fc_fecha }) |
+    @Html.ActionLink("Volver a la lista", "Index")
+</p>
