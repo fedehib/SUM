@@ -46,7 +46,7 @@ namespace SUM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Espacio espacio = db.Espacio.Find(id);
+            Espacio espacio = db.Espacio.Find(GetUsuario().cd_consorcio, id);
             if (espacio == null)
             {
                 return HttpNotFound();
@@ -104,7 +104,7 @@ namespace SUM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Espacio espacio = db.Espacio.Find(id);
+            Espacio espacio = db.Espacio.Find(GetUsuario().cd_consorcio, id);
             if (espacio == null)
             {
                 return HttpNotFound();
@@ -147,7 +147,7 @@ namespace SUM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Espacio espacio = db.Espacio.Find(id);
+            Espacio espacio = db.Espacio.Find(GetUsuario().cd_consorcio, id);
             if (espacio == null)
             {
                 return HttpNotFound();
@@ -165,7 +165,7 @@ namespace SUM.Controllers
 
             if (!((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
                 return RedirectToAction("Index", "Home");
-            Espacio espacio = db.Espacio.Find(id);
+            Espacio espacio = db.Espacio.Find(GetUsuario().cd_consorcio, id);
             db.Espacio.Remove(espacio);
             db.SaveChanges();
             return RedirectToAction("Index");

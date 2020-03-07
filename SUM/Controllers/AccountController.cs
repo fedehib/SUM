@@ -48,7 +48,7 @@ namespace SUM.Controllers
         public ActionResult Login(string cd_usuario, string tx_contrasena, int? cd_consorcio)
         {
             if (db.Consorcio.Count() == 1)
-                cd_consorcio = 1;
+                cd_consorcio = db.Consorcio.FirstOrDefault().cd_consorcio;
             cd_usuario = cd_usuario.ToUpper();
             Usuario usr = db.Usuario.Find(cd_consorcio, cd_usuario);
 
