@@ -256,6 +256,16 @@ namespace SUM.Controllers
                             ViewBag.cd_espacio = new SelectList(db.Espacio.Where(x => x.cd_consorcio == usuario.cd_consorcio), "cd_espacio", "tx_descripcion", reserva.cd_consorcio);
                             return View(reserva);
                         }
+                        
+                        //generico cualquier consorcio
+                        if (db.Reserva.Where(x => x.cd_consorcio == reserva.cd_consorcio && x.fc_fecha == reserva.fc_fecha && x.cd_espacio == reserva.cd_espacio).Count() > 0)
+                        {
+                            var res = db.Reserva.Where(x => x.cd_consorcio == reserva.cd_consorcio && x.fc_fecha == reserva.fc_fecha).FirstOrDefault();
+                            ViewBag.Resultado = "Ya existe una reserva para ese espacio en esa fecha. La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
+                            ViewBag.cd_usuario = new SelectList(db.Usuario.Where(x => x.cd_consorcio == usuario.cd_consorcio && x.fl_inhabilita_reserva == false), "cd_usuario", "cd_usuario");
+                            ViewBag.cd_espacio = new SelectList(db.Espacio.Where(x => x.cd_consorcio == usuario.cd_consorcio), "cd_espacio", "tx_descripcion", reserva.cd_consorcio);
+                            return View(reserva);
+                        }
                     }
 
 
