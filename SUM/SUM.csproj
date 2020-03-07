@@ -275,7 +275,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\bigstock-Abstract-Blurred-Background-Of-92820527.jpg" />
     <Content Include="Images\pdf16.gif" />
     <Content Include="Images\pdf32.gif" />
     <Content Include="Images\xls16.gif" />
