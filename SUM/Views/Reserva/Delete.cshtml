@@ -74,7 +74,7 @@
 
         <div class="form-actions no-color">
 @if ((((SUM.Models.Usuario)Session["Usuario"]).fl_administrador) || ViewBag.PuedeEliminarse) {
-            <input type="submit" value="Eliminar" class="btn btn-default" />
+            <input type="submit" value="Eliminar" class="btn btn-primary" />
                                                                            }
             | @Html.ActionLink("Volver a la lista", "Index")
         </div>

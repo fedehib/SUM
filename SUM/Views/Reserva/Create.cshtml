@@ -1,7 +1,7 @@
 ﻿@model SUM.Models.Reserva
 
 @{
-    ViewBag.Title ="Crear";
+    ViewBag.Title = "Crear";
 }
 
 <h2>Crear</h2>
@@ -11,125 +11,125 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Reserva</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <h4>Reserva</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.cd_espacio, "Espacio", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("cd_espacio", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.cd_espacio, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-    @if (((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
-    {
         <div class="form-group">
-            @Html.LabelFor(model => model.cd_usuario, "Departamento", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.cd_espacio, "Espacio", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("cd_usuario", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.cd_usuario, "", new { @class = "text-danger" })
+                @Html.DropDownList("cd_espacio", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.cd_espacio, "", new { @class = "text-danger" })
             </div>
         </div>
-    }
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.fc_fecha, "Fecha de reserva", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="input-group date has-feedback datetimepicker1">
-                <input type="datetime" name="fc_fecha" class="form-control date-picker" />
-                <i class="fa fa-calendar form-control-feedback"></i>
+        @if (((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.cd_usuario, "Departamento", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("cd_usuario", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.cd_usuario, "", new { @class = "text-danger" })
+                </div>
             </div>
-            @Html.ValidationMessageFor(model => model.fc_fecha, "", new { @class = "text-danger" })
-        </div>
-    </div>
+        }
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.fl_contrata_limpieza, "Contrata limpieza?", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.fl_contrata_limpieza)
-                @Html.ValidationMessageFor(model => model.fl_contrata_limpieza, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
 
-    @if (((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
-    {
         <div class="form-group">
-            @Html.LabelFor(model => model.fl_multa, "Aplicar multa?", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.fc_fecha, "Fecha de reserva", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group date has-feedback datetimepicker1">
+                    <input type="datetime" id="fc_fecha" name="fc_fecha" class="form-control date-picker" />
+                    <i class="fa fa-calendar form-control-feedback"></i>
+                </div>
+                @Html.ValidationMessageFor(model => model.fc_fecha, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fl_contrata_limpieza, "Contrata limpieza?", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.fl_multa)
-                    @Html.ValidationMessageFor(model => model.fl_multa, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.fl_contrata_limpieza)
+                    @Html.ValidationMessageFor(model => model.fl_contrata_limpieza, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-    }
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.tx_observacion, "Observaciones", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <textarea class="form-control" name="tx_observacion" rows="10" id="tx_observacion"></textarea>
-            @Html.ValidationMessageFor(model => model.tx_observacion, "", new { @class = "text-danger" })
+        @if (((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.fl_multa, "Aplicar multa?", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.fl_multa)
+                        @Html.ValidationMessageFor(model => model.fl_multa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.tx_observacion, "Observaciones", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <textarea class="form-control" name="tx_observacion" rows="10" id="tx_observacion"></textarea>
+                @Html.ValidationMessageFor(model => model.tx_observacion, "", new { @class = "text-danger" })
+            </div>
         </div>
+
+        @if (((SUM.Models.Usuario)Session["Usuario"]).cd_consorcio == 1)
+        {
+            <div class="alert alert-info" role="alert">
+                <h5><strong>Consideraciones Reserva:</strong></h5>
+                <ul>
+                    <li>El SUM se puede cancelar sin costo de reserva, hasta @Html.Raw(@ViewBag.TiempoCancelacion) días antes de la fecha reservada, caso contrario se abonará por completo.</li>
+                    <li>Si existe una reserva de SUM en la fecha, no se podrá reservar la parrilla. Se debe coordinar con quien tenga la reserva del SUM en ese turno para utilizarla.</li>
+                    <li>Si existe una reserva de Parrilla en la fecha, se podrá reservar el SUM y recomendamos consensuar con quien tenga el alquiler de Parrilla para evitar inconvenientes de humo/olores.</li>
+                    <li>
+                        La llave del SUM deberá solicitarse a quién haya tenido la reserva anterior, o bien se entregará/solicitará a las siguientes personas:
+                        <ul>
+                            @Html.Raw(@ViewBag.Contactos)
+
+                        </ul>
+                    </li>
+                    <li>Solo para los dias 24/12, 25/12, 31/12 y 1/1 el SUM podrá ser reservado por múltiples departamentos, y se hará el sorteo correspondiente entre los anotados por el sistema, eliminando a los perdedores del sorteo.</li>
+                </ul>
+                <h5><strong>Consideraciones Limpieza:</strong></h5>
+                <ul>
+                    <li>El SUM debe entregarse en óptimas condiciones, caso contrario se aplicará una multa a quién corresponda.</li>
+                    <li>Sino se compromete a limpiarlo, puede contratar la limpieza y la misma se abonará por expensas.</li>
+                    <li>Sino contrato la limpieza, y entregó el SUM sucio, el administrador le aplicará la multa.</li>
+
+                </ul>
+                <h5><strong>Valores a la fecha:</strong></h5>
+                <ul>
+                    @Html.Raw(@ViewBag.Valores)
+
+                </ul>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </div>
+
+        @if (ViewBag.Resultado != "")
+        {
+            <div class="form-group">
+
+                <div class="alert alert-warning alert-danger" role="alert" id="alertaboton">
+                    <h6>@ViewBag.Resultado</h6>
+                </div>
+            </div>
+        }
+
     </div>
-
-    @if (((SUM.Models.Usuario)Session["Usuario"]).cd_consorcio == 1)
-    {
-        <div class="alert alert-info" role="alert">
-            <h5><strong>Consideraciones Reserva:</strong></h5>
-            <ul>
-                <li>El SUM se puede cancelar sin costo de reserva, hasta @Html.Raw(@ViewBag.TiempoCancelacion) días antes de la fecha reservada, caso contrario se abonará por completo.</li>
-                <li>Si existe una reserva de SUM en la fecha, no se podrá reservar la parrilla. Se debe coordinar con quien tenga la reserva del SUM en ese turno para utilizarla.</li>
-                <li>Si existe una reserva de Parrilla en la fecha, se podrá reservar el SUM y recomendamos consensuar con quien tenga el alquiler de Parrilla para evitar inconvenientes de humo/olores.</li>
-                <li>
-                    La llave del SUM deberá solicitarse a quién haya tenido la reserva anterior, o bien se entregará/solicitará a las siguientes personas:
-                    <ul>
-                        @Html.Raw(@ViewBag.Contactos)
-
-                    </ul>
-                </li>
-                <li>Solo para los dias 24/12, 25/12, 31/12 y 1/1 el SUM podrá ser reservado por múltiples departamentos, y se hará el sorteo correspondiente entre los anotados por el sistema, eliminando a los perdedores del sorteo.</li>
-            </ul>
-            <h5><strong>Consideraciones Limpieza:</strong></h5>
-            <ul>
-                <li>El SUM debe entregarse en óptimas condiciones, caso contrario se aplicará una multa a quién corresponda.</li>
-                <li>Sino se compromete a limpiarlo, puede contratar la limpieza y la misma se abonará por expensas.</li>
-                <li>Sino contrato la limpieza, y entregó el SUM sucio, el administrador le aplicará la multa.</li>
-
-            </ul>
-            <h5><strong>Valores a la fecha:</strong></h5>
-            <ul>
-                @Html.Raw(@ViewBag.Valores)
-
-            </ul>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    }
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Crear" class="btn btn-default" />
-        </div>
-    </div>
-
-    @if (ViewBag.Resultado!="")
-    {
-    <div class="form-group">
-
-        <div class="alert alert-warning alert-danger" role="alert" id="alertaboton">
-            <h6>@ViewBag.Resultado</h6>
-        </div>
-    </div>
-    }
-
-</div>
 }
 
 <div>
@@ -153,3 +153,10 @@
         });
     });
 </script>
+@{ if (ViewBag.SetearFecha)
+    {
+        <script>
+    $("#fc_fecha").val('@ViewBag.fc_fecha');
+        </script>
+    }
+}

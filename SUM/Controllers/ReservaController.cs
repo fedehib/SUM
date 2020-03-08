@@ -18,7 +18,7 @@ namespace SUM.Controllers
         public class _calendario
         {
             public string id { get; set; }
-            public int resourceId { get; set; }
+            
             public DateTime start { get; set; }
             public DateTime end { get; set; }
             public string title { get; set; }
@@ -41,6 +41,8 @@ namespace SUM.Controllers
                 dato.start = item.fc_fecha;
                 dato.end = item.fc_fecha;
                 dato.title = item.Espacio.tx_descripcion + " (" + item.cd_usuario + ") " + limpieza;
+                dato.id = item.cd_espacio+"|"+item.cd_usuario + "|"+item.fc_fecha.ToString("MM/dd/yyyy");
+
                 lista.Add(dato);
             }
 
@@ -77,9 +79,9 @@ namespace SUM.Controllers
             if (GetUsuario() == null)
                 return RedirectToAction("Login", "Account");
 
-            if (!((SUM.Models.Usuario)Session["Usuario"]).fl_administrador && ((SUM.Models.Usuario)Session["Usuario"]).cd_usuario != usuario)
-                return RedirectToAction("Index", "Home");
-
+            //if (!((SUM.Models.Usuario)Session["Usuario"]).fl_administrador && ((SUM.Models.Usuario)Session["Usuario"]).cd_usuario != usuario)
+            //    return RedirectToAction("Index", "Home");
+            ViewBag.MostrarBoton = ((((SUM.Models.Usuario)Session["Usuario"]).fl_administrador) || (((SUM.Models.Usuario)Session["Usuario"]).cd_usuario == usuario));
 
             if (espacio == 0 || string.IsNullOrEmpty(usuario) || fecha == null)
             {
@@ -155,7 +157,7 @@ namespace SUM.Controllers
             return tiempo;
         }
         // GET: Reserva/Create
-        public ActionResult Create()
+        public ActionResult Create(DateTime ?fecha)
         {
            
 
@@ -163,6 +165,18 @@ namespace SUM.Controllers
                 return RedirectToAction("Login", "Account");
 
             var usuario = GetUsuario();
+
+            if (fecha == null || fecha == DateTime.MinValue)
+            {
+                ViewBag.SetearFecha = false;
+            }
+            else
+            {
+                ViewBag.SetearFecha = true;
+                ViewBag.fc_fecha = fecha.Value.ToString("MM/dd/yyyy");
+
+            }
+
 
             ViewBag.cd_usuario = new SelectList(db.Usuario.Where(x => x.cd_consorcio == usuario.cd_consorcio && x.fl_inhabilita_reserva == false), "cd_usuario", "cd_usuario");
             ViewBag.cd_espacio = new SelectList(db.Espacio.Where(x => x.cd_consorcio == usuario.cd_consorcio), "cd_espacio", "tx_descripcion");
@@ -173,6 +187,7 @@ namespace SUM.Controllers
             ViewBag.Resultado = "";
             return View();
         }
+
 
         // POST: Reserva/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
@@ -190,8 +205,8 @@ namespace SUM.Controllers
             //el administrador podra ver el combo y realizar reservas a nombre de otros usuarios, pero el propio usuario se carga a si mismo y no se ve x pantalla eso.
             if (string.IsNullOrEmpty(reserva.cd_usuario))
                 reserva.cd_usuario = usuario.cd_usuario;
-
-
+            ViewBag.SetearFecha = false;
+            
             if (DateTime.Now.Date <= reserva.fc_fecha || usuario.fl_administrador)
             {
 
@@ -215,7 +230,7 @@ namespace SUM.Controllers
                         if (db.Reserva.Where(x => x.cd_consorcio == 1 && x.fc_fecha == reserva.fc_fecha && x.cd_espacio == reserva.cd_espacio).Count() > 0)
                         {
                             var res = db.Reserva.Where(x => x.cd_consorcio == 1 && x.fc_fecha == reserva.fc_fecha && x.cd_espacio == reserva.cd_espacio).FirstOrDefault();
-                            ViewBag.Resultado = "Ya existe una reserva para ese espacio en esa fecha. La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
+                            ViewBag.Resultado = "Ya existe una reserva para ese espacio para el dia "+ reserva.fc_fecha.ToString("dd/MM/yyyy") +". La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
                             ViewBag.cd_usuario = new SelectList(db.Usuario.Where(x => x.cd_consorcio == usuario.cd_consorcio && x.fl_inhabilita_reserva == false), "cd_usuario", "cd_usuario");
                             ViewBag.cd_espacio = new SelectList(db.Espacio.Where(x => x.cd_consorcio == usuario.cd_consorcio), "cd_espacio", "tx_descripcion", reserva.cd_consorcio);
                             return View(reserva);
@@ -223,7 +238,7 @@ namespace SUM.Controllers
                         if (db.Reserva.Where(x => x.cd_consorcio == 1 && x.fc_fecha == reserva.fc_fecha && x.cd_espacio == 4).Count() > 0)
                         {
                             var res = db.Reserva.Where(x => x.cd_consorcio == 1 && x.fc_fecha == reserva.fc_fecha && x.cd_espacio == 4).FirstOrDefault();
-                            ViewBag.Resultado = "Ya existe una reserva para ese espacio en esa fecha. La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
+                            ViewBag.Resultado = "Ya existe una reserva para ese espacio el dia " + reserva.fc_fecha.ToString("dd/MM/yyyy") + ". La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
                             ViewBag.cd_usuario = new SelectList(db.Usuario.Where(x => x.cd_consorcio == usuario.cd_consorcio && x.fl_inhabilita_reserva == false), "cd_usuario", "cd_usuario");
                             ViewBag.cd_espacio = new SelectList(db.Espacio.Where(x => x.cd_consorcio == usuario.cd_consorcio), "cd_espacio", "tx_descripcion", reserva.cd_consorcio);
                             return View(reserva);
@@ -231,7 +246,7 @@ namespace SUM.Controllers
                         if (db.Reserva.Where(x => x.cd_consorcio == 1 && x.fc_fecha == reserva.fc_fecha && x.cd_espacio == 1).Count() > 0 && (reserva.cd_espacio==1 || reserva.cd_espacio==6))
                         {
                             var res = db.Reserva.Where(x => x.cd_consorcio == 1 && x.fc_fecha == reserva.fc_fecha && x.cd_espacio == 1).FirstOrDefault();
-                            ViewBag.Resultado = "Ya existe una reserva para ese espacio en esa fecha. La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
+                            ViewBag.Resultado = "Ya existe una reserva para ese espacio el dia " + reserva.fc_fecha.ToString("dd/MM/yyyy") + ". La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
                             ViewBag.cd_usuario = new SelectList(db.Usuario.Where(x => x.cd_consorcio == usuario.cd_consorcio && x.fl_inhabilita_reserva == false), "cd_usuario", "cd_usuario");
                             ViewBag.cd_espacio = new SelectList(db.Espacio.Where(x => x.cd_consorcio == usuario.cd_consorcio), "cd_espacio", "tx_descripcion", reserva.cd_consorcio);
                             return View(reserva);
@@ -239,7 +254,7 @@ namespace SUM.Controllers
                         if (db.Reserva.Where(x => x.cd_consorcio == 1 && x.fc_fecha == reserva.fc_fecha && x.cd_espacio == 2).Count() > 0 && (reserva.cd_espacio == 2 || reserva.cd_espacio == 7))
                         {
                             var res = db.Reserva.Where(x => x.cd_consorcio == 1 && x.fc_fecha == reserva.fc_fecha && x.cd_espacio == 2).FirstOrDefault();
-                            ViewBag.Resultado = "Ya existe una reserva para ese espacio en esa fecha. La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
+                            ViewBag.Resultado = "Ya existe una reserva para ese espacio el dia " + reserva.fc_fecha.ToString("dd/MM/yyyy") + ". La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
                             ViewBag.cd_usuario = new SelectList(db.Usuario.Where(x => x.cd_consorcio == usuario.cd_consorcio && x.fl_inhabilita_reserva == false), "cd_usuario", "cd_usuario");
                             ViewBag.cd_espacio = new SelectList(db.Espacio.Where(x => x.cd_consorcio == usuario.cd_consorcio), "cd_espacio", "tx_descripcion", reserva.cd_consorcio);
                             return View(reserva);
@@ -251,7 +266,7 @@ namespace SUM.Controllers
                                 res = db.Reserva.Where(x => x.cd_consorcio == 1 && x.fc_fecha == reserva.fc_fecha && x.cd_espacio == 2).FirstOrDefault();
                             if (res==null)
                                 res = db.Reserva.Where(x => x.cd_consorcio == 1 && x.fc_fecha == reserva.fc_fecha && x.cd_espacio == 3).FirstOrDefault();
-                            ViewBag.Resultado = "Ya existe una reserva para ese espacio en esa fecha. La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
+                            ViewBag.Resultado = "Ya existe una reserva para ese espacio el dia " + reserva.fc_fecha.ToString("dd/MM/yyyy") + ". La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
                             ViewBag.cd_usuario = new SelectList(db.Usuario.Where(x => x.cd_consorcio == usuario.cd_consorcio && x.fl_inhabilita_reserva == false), "cd_usuario", "cd_usuario");
                             ViewBag.cd_espacio = new SelectList(db.Espacio.Where(x => x.cd_consorcio == usuario.cd_consorcio), "cd_espacio", "tx_descripcion", reserva.cd_consorcio);
                             return View(reserva);
@@ -261,7 +276,8 @@ namespace SUM.Controllers
                         if (db.Reserva.Where(x => x.cd_consorcio == reserva.cd_consorcio && x.fc_fecha == reserva.fc_fecha && x.cd_espacio == reserva.cd_espacio).Count() > 0)
                         {
                             var res = db.Reserva.Where(x => x.cd_consorcio == reserva.cd_consorcio && x.fc_fecha == reserva.fc_fecha).FirstOrDefault();
-                            ViewBag.Resultado = "Ya existe una reserva para ese espacio en esa fecha. La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
+                            ViewBag.Resultado = "Ya existe una reserva para ese espacio el dia " + reserva.fc_fecha.ToString("dd/MM/yyyy") + ". La misma esta reserva por " + res.cd_usuario + " (" + res.Usuario.tx_telefono + ")";
+                            
                             ViewBag.cd_usuario = new SelectList(db.Usuario.Where(x => x.cd_consorcio == usuario.cd_consorcio && x.fl_inhabilita_reserva == false), "cd_usuario", "cd_usuario");
                             ViewBag.cd_espacio = new SelectList(db.Espacio.Where(x => x.cd_consorcio == usuario.cd_consorcio), "cd_espacio", "tx_descripcion", reserva.cd_consorcio);
                             return View(reserva);
@@ -280,8 +296,8 @@ namespace SUM.Controllers
                     }
                     catch (Exception ex)
                     {
-                        ViewBag.Resultado = "Ya existe una reserva realizada en esa fecha para ese usuario en ese espacio. Contactese con el administrador si continua el inconveniente.";
-                            Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                        ViewBag.Resultado = "Ya existe una reserva realizada para el dia " + reserva.fc_fecha.ToString("dd/MM/yyyy") + " para ese usuario en ese espacio. Contactese con el administrador si continua el inconveniente.";
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                     }
                     
                     

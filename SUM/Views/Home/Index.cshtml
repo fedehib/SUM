@@ -22,8 +22,27 @@
             locale: 'es',
             events: '@Url.Action("ListaReservas", "Reserva")',
             fixedWeekCount: false,
-            showNonCurrentDates: false
+            showNonCurrentDates: false,
+            eventClick: function (event) {
+                var evento = event.id.split('|');
+                window.location = '@Url.Action("Details", "Reserva")?espacio=' + evento[0] + '&usuario=' + evento[1] + '&fecha=' + evento[2].replace('/','%2F');
+            },
+            dayClick: function (date, allDay, jsEvent, view) {
+                var completedDateText = "/Date("+date+")/";
+                var completedDate = new Date(parseInt(completedDateText.replace("/Date(", "").replace(")/")));
+                completedDate.setDate(completedDate.getDate() + 1);
+                var dd = completedDate.getDate();
+                var mm = completedDate.getMonth() + 1; //January is 0!
+                var yyyy = completedDate.getFullYear(); 
+                if(dd<10){dd='0'+dd} 
+                if(mm<10){mm='0'+mm}
+                var fecha= mm + '%2F' + dd + '%2F' + yyyy;
+                window.location = '@Url.Action("Create", "Reserva")?fecha='+fecha;
+            }
+
         });
+
+        
 
         
     });
