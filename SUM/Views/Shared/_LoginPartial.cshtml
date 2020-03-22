@@ -9,7 +9,7 @@
             <li>
                 @Html.ActionLink("Bienvenido " + ((SUM.Models.Usuario)Session["Usuario"]).cd_usuario + " ("+ ((SUM.Models.Usuario)Session["Usuario"]).Consorcio.tx_descripcion + ")!", "Edit", "Usuario")
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
+            <li> <a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
         </ul>
     }
 }
