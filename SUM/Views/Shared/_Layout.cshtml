@@ -72,9 +72,10 @@ if (((SUM.Models.Usuario)Session["Usuario"]).fl_administrador)
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Sistema de Reservas</p>
-        </footer>
+        <div id="footer">
+            <p style="float:left">@DateTime.Now.Year - Sistema de Reservas</p>
+            <p style="float:right">Desarrollado por <a href="mailto:consultoriagrpsystems@gmail.com">consultoriagrpsystems@gmail.com</a> | Contacto: <a href="https://api.whatsapp.com/send?phone=5491164801988&text=Contacto%20desde%20el%20sitio%20web.">+54-911-6480-1988</a></p>
+        </div>
     </div>
 
     
